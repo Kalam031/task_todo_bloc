@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import '../blocs/my_bloc_observer.dart';
 import 'blocs/bloc_exports.dart';
 import 'screens/tasks_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
+
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
+
+  HydratedBloc.storage = storage;
 }
 
 class MyApp extends StatelessWidget {
