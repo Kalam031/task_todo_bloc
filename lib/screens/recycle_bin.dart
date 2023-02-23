@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../blocs/bloc_exports.dart';
 import '../widgets/tasks_list.dart';
 import 'my_drawer.dart';
 
@@ -9,32 +10,36 @@ class RecycleBin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Recycle Bin'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add),
-          )
-        ],
-      ),
-      drawer: const SafeArea(
-        child: MyDrawer(),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          Center(
-            child: Chip(
-              label: Text(
-                'Tasks',
-              ),
-            ),
+    return BlocBuilder<TasksBloc, TasksState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Recycle Bin'),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.add),
+              )
+            ],
           ),
-          TasksList(taskList: []),
-        ],
-      ),
+          drawer: const SafeArea(
+            child: MyDrawer(),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: Chip(
+                  label: Text(
+                    '${state.removedTasks.length} Tasks',
+                  ),
+                ),
+              ),
+              TasksList(taskList: state.removedTasks),
+            ],
+          ),
+        );
+      },
     );
   }
 }
