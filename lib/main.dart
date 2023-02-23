@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasks_app/services/app_router.dart';
 import 'package:path_provider/path_provider.dart';
 import '../blocs/my_bloc_observer.dart';
 import 'blocs/bloc_exports.dart';
@@ -11,13 +12,16 @@ void main() async {
       storageDirectory: await getApplicationDocumentsDirectory());
 
   Bloc.observer = MyBlocObserver();
-  runApp(const MyApp());
+  runApp(MyApp(
+    appRouter: AppRouter(),
+  ));
 
   HydratedBloc.storage = storage;
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.appRouter}) : super(key: key);
+  final AppRouter appRouter;
 
   // This widget is the root of your application.
   @override
@@ -31,6 +35,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const TasksScreen(),
+        onGenerateRoute: appRouter.onGenerateRoute,
       ),
     );
   }
