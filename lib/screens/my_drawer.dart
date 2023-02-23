@@ -5,8 +5,15 @@ import '../screens/tasks_screen.dart';
 
 import '../blocs/bloc_exports.dart';
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<MyDrawer> createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
+  bool switchValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +59,13 @@ class MyDrawer extends StatelessWidget {
               );
             },
           ),
+          Switch(
+              value: switchValue,
+              onChanged: (newValue) {
+                setState(() {
+                  switchValue = newValue;
+                });
+              })
         ],
       ),
     );
