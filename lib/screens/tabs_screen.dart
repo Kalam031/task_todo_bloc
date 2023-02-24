@@ -37,6 +37,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
   void _addTask(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (context) => const SingleChildScrollView(child: AddTaskScreen()),
     );
@@ -45,6 +46,7 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(_pageDetails[_selectedPageIndex]['title']),
         actions: [
