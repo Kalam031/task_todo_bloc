@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasks_app/screens/tabs_screen.dart';
 
 import '../screens/recycle_bin.dart';
-import '../screens/tasks_screen.dart';
 
 import '../blocs/bloc_exports.dart';
 
@@ -29,7 +29,7 @@ class MyDrawer extends StatelessWidget {
             builder: (context, state) {
               return GestureDetector(
                 onTap: () =>
-                    Navigator.of(context).pushReplacementNamed(TasksScreen.id),
+                    Navigator.of(context).pushReplacementNamed(TabsScreen.id),
                 child: ListTile(
                   leading: const Icon(Icons.folder_special),
                   title: const Text('My Tasks'),
