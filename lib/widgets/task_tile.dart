@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasks_app/screens/edit_task_screen.dart';
 import 'package:intl/intl.dart';
 
 import '../blocs/bloc_exports.dart';
@@ -17,6 +18,18 @@ class TaskTile extends StatelessWidget {
     task.isDeleted!
         ? ctx.read<TasksBloc>().add(DeleteTask(task: task))
         : ctx.read<TasksBloc>().add(Removetask(task: task));
+  }
+
+  void _editTask(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => SingleChildScrollView(
+        child: EditTaskScreen(
+          oldTask: task,
+        ),
+      ),
+    );
   }
 
   @override
@@ -72,6 +85,10 @@ class TaskTile extends StatelessWidget {
               likeOrDislikeCallback: () => context
                   .read<TasksBloc>()
                   .add(MarkFavoriteOrUnfavoriteTask(task: task)),
+              editTaskCallback: () {
+                Navigator.of(context).pop();
+                _editTask(context);
+              },
               task: task,
             ),
           ],

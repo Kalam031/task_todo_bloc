@@ -12,6 +12,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<DeleteTask>(_onDeleteTask);
     on<Removetask>(_onRemoveTask);
     on<MarkFavoriteOrUnfavoriteTask>(_onMarkFavoriteOrUnfavoriteTask);
+    on<EditTask>(_onEditTask);
   }
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) {
@@ -117,6 +118,26 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         removedTasks: state.removedTasks,
       ),
     );
+  }
+
+  void _onEditTask(EditTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+    List<Task> favoriteTasks = state.favoriteTasks;
+
+    if (event.oldTask.isFavorite == true) {
+      favoriteTasks
+        ..remove(event.oldTask)
+        ..insert(0, event.newTask);
+    }
+
+    emit(TasksState(
+      pendingTasks: List.from(state.pendingTasks)
+        ..remove(event.oldTask)
+        ..insert(0, event.newTask),
+      completedTasks: state.completedTasks..remove(event.oldTask),
+      favoriteTasks: favoriteTasks,
+      removedTasks: state.removedTasks,
+    ));
   }
 
   @override
