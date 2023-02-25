@@ -28,7 +28,9 @@ class TaskTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Row(children: [
-              const Icon(Icons.star_outline),
+              task.isFavorite == false
+                  ? const Icon(Icons.star_outline)
+                  : const Icon(Icons.star),
               const SizedBox(
                 width: 10.0,
               ),
@@ -67,6 +69,9 @@ class TaskTile extends StatelessWidget {
             ),
             PopupMenu(
               cancelOrDeleteCallback: () => _removeOrDeleteTask(context, task),
+              likeOrDislikeCallback: () => context
+                  .read<TasksBloc>()
+                  .add(MarkFavoriteOrUnfavoriteTask(task: task)),
               task: task,
             ),
           ],

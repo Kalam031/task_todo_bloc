@@ -5,10 +5,12 @@ import '../models/task.dart';
 class PopupMenu extends StatelessWidget {
   final Task task;
   final VoidCallback cancelOrDeleteCallback;
+  final VoidCallback likeOrDislikeCallback;
 
   const PopupMenu({
     Key? key,
     required this.cancelOrDeleteCallback,
+    required this.likeOrDislikeCallback,
     required this.task,
   }) : super(key: key);
 
@@ -28,10 +30,14 @@ class PopupMenu extends StatelessWidget {
                 PopupMenuItem(
                   child: TextButton.icon(
                     onPressed: null,
-                    icon: const Icon(Icons.bookmark),
-                    label: const Text('Add to Bookmarks'),
+                    icon: task.isFavorite == false
+                        ? const Icon(Icons.bookmark_add_outlined)
+                        : const Icon(Icons.bookmark_remove),
+                    label: task.isFavorite == false
+                        ? const Text('Add to Bookmarks')
+                        : const Text('Remove from Bookmarks'),
                   ),
-                  onTap: () {},
+                  onTap: likeOrDislikeCallback,
                 ),
                 PopupMenuItem(
                   child: TextButton.icon(
